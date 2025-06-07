@@ -1,4 +1,12 @@
 eksctl create podidentityassociation -f - <<EOF
+apiVersion: eksctl.io/v1alpha5
+kind: ClusterConfig
+
+metadata:
+  name: ${CLUSTER_NAME}
+  region: ap-northeast-2
+  version: "1.32"
+
 iam:
   withOIDC: true
   podIdentityAssociations:
