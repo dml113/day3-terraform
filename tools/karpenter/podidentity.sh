@@ -1,3 +1,4 @@
+eksctl create podidentityassociation -f - <<EOF
 iam:
   withOIDC: true
   podIdentityAssociations:
@@ -6,3 +7,4 @@ iam:
     roleName: ${CLUSTER_NAME}-karpenter
     permissionPolicyARNs:
     - arn:${AWS_PARTITION}:iam::${AWS_ACCOUNT_ID}:policy/KarpenterControllerPolicy-${CLUSTER_NAME}
+EOF
