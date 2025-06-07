@@ -1,0 +1,56 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: token
+  name: token-deploy
+  namespace: app
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: token
+  template:
+    metadata:
+      labels:
+        app: token
+    spec:
+      terminationGracePeriodSeconds: 50
+      containers:
+      - env:
+        - name: MYSQL_USER
+          value: admin
+        - name: MYSQL_PASSWORD
+          value: Skill53##
+        - name: MYSQL_URL
+          value: database-1.cde69tvxoswa.ap-northeast-2.rds.amazonaws.com:3306
+        - name: MYSQL_DBNAME
+          value: dev
+        image: 950274644703.dkr.ecr.ap-northeast-2.amazonaws.com/app:v1.0.0
+        imagePullPolicy: Always
+        name: token-container
+        livenessProbe:
+          httpGet:
+            path: /health
+            port: 8080
+          initialDelaySeconds: 5
+          periodSeconds: 5
+          timeoutSeconds: 3
+        readinessProbe:
+          httpGet:
+            path: /health
+            port: 8080
+          initialDelaySeconds: 3
+          periodSeconds: 5
+          timeoutSeconds: 2
+        lifecycle:
+          preStop:
+            exec:
+              command: ["/bin/sh", "-c", "sleep 40"]
+        resources:
+          requests:
+            cpu: 250m
+            memory: 256Mi
+          limits:
+            cpu: 500m
+            memory: 512Mi
