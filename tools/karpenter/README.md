@@ -1,7 +1,4 @@
 ```bash
-eksctl create podidentityassociation -f podidentity.yaml
-```
-```bash
 export KARPENTER_NAMESPACE="kube-system"
 export KARPENTER_VERSION="1.5.0"
 export K8S_VERSION="1.32"
