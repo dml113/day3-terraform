@@ -8,6 +8,7 @@ export CLUSTER_NAME="<CLUSTER_NAME>"
 export AWS_DEFAULT_REGION="ap-northeast-2"
 export AWS_ACCOUNT_ID="$(aws sts get-caller-identity --query Account --output text)"
 export TEMPOUT="$(mktemp)"
+export ALIAS_VERSION="$(aws ssm get-parameter --name "/aws/service/eks/optimized-ami/${K8S_VERSION}/amazon-linux-2023/x86_64/standard/recommended/image_id" --query Parameter.Value | xargs aws ec2 describe-images --query 'Images[0].Name' --image-ids | sed -r 's/^.*(v[[:digit:]]+).*$/\1/')"
 ```
 
 ### 2. install.sh 실행 후 아래 진행
